@@ -5,7 +5,7 @@ import HomePage from './components/pages/HomePage';
 
 function App() {
   return (
-    <div className="App">
+      <main>
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -13,7 +13,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
         </Routes>
       </Router>
-    </div>
+      </main>
   );
 }
 

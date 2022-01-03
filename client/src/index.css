@@ -61,5 +61,78 @@ a {
   --c-white-70: rgba(255, 255, 255, 0.7);
   --c-white-40: rgba(255, 255, 255, 0.4);
   --c-white-20: rgba(255, 255, 255, 0.2);
+  --c-active: #4124a7;
   --c-error: #D21111;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--c-light-gray);
+}
+
+/* Headers */
+
+h1{
+  font-size: 36px;
+}
+
+h2{
+  font-size: 32px;
+}
+
+
+main {
+  min-width: 900px;
+  padding: 16px;
+}
+.input-field{
+  margin: 12px 0 24px;
+}
+.input-field label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: var(--c-black-60);
+}
+
+.input-field input {
+  width: 100%;
+  padding: 12px 12px;
+  font-size: 16px;
+  border: 1px solid var(--c-black-30);
+  border-radius: 4px;
+}
+
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-container{
+  background-color: white;
+  padding: 24px;
+  min-width: 400px;
+  border-radius: 12px;
+}
+
+.signup .btn-group {
+  text-align: right;
+}
+
+.btn{
+  display: inline-block;
+  font-size: 16px;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
+.btn-default {
+  color: white;
+  background-color: var(--c-active);
+  border: 1px solid var(--c-black-12);
+  border-radius: 4px;
 }
