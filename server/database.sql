@@ -18,3 +18,6 @@ VALUES
         'anna@example.com',
         'blakgsfbhk-fwkbafe-aebfhklb'
     );
+
+-- Find user name with email
+SELECT name FROM users WHERE email='anna@example.com';
