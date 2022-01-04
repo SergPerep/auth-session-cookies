@@ -52,7 +52,10 @@ const SignupPage = () => {
                         value={formInputs.password}
                         onChange={handleChangeInputValue}
                     />
-                    <HrefLessLink onClick={() => redirectTo("/login")}>Already have an account?</HrefLessLink>
+                    <HrefLessLink onClick={e => {
+                        e.preventDefault();
+                        redirectTo("/login")
+                    }}>Already have an account?</HrefLessLink>
                     <div className="btn-group">
                         <Button design='default'>Sign up</Button>
                     </div>

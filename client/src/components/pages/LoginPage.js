@@ -43,7 +43,10 @@ const LoginPage = () => {
                         value={formInputs.password}
                         onChange={handleChangeInputValue}
                     />
-                    <HrefLessLink onClick={() => redirectTo("/signup")}>Don't have an accout yet?</HrefLessLink>
+                    <HrefLessLink onClick={e => {
+                        e.preventDefault();
+                        redirectTo("/signup")
+                    }}>Don't have an accout yet?</HrefLessLink>
                     <div className="btn-group">
                         <Button design='default'>Login</Button>
                     </div>
