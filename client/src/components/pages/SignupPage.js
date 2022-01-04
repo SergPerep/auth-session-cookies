@@ -17,12 +17,32 @@ const SignupPage = () => {
         setFormInputs({ ...formInputs, [e.target.name]: e.target.value });
     }
 
-    const handleSubmitForm = e => {
+    const handleSubmitForm = async e => {
+        try {
+            const token = await signUpNewUser(formInputs.name, formInputs.email, formInputs.password);
+            localStorage.setItem("token", token);
+        } catch (error) {
+            console.error(error.message);
+        }
         e.preventDefault();
         console.log("-- submit");
     }
 
     const redirectTo = useNavigate();
+
+    const signUpNewUser = async (name, email, password) => {
+        try {
+            const body = { name, email, password };
+            const response = await fetch("http://localhost:5000/auth/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            })
+            const { token } = await response.json();
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
     return (
         <div className="signup signup-wrapper">
             <div className="signup-container">

@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = props => {
-    const [isUserAuthorized, setIsUserAuthorized] = useState(true);
+    const [isUserAuthorized, setIsUserAuthorized] = useState(false);
     const sharedStatesAndMethods = {
         isUserAuthorized,
         setIsUserAuthorized

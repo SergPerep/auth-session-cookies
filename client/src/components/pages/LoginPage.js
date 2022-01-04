@@ -12,15 +12,36 @@ const LoginPage = () => {
         password: ''
     })
     const handleChangeInputValue = e => {
-        setFormInputs({ formInputs, [e.target.name]: e.target.value });
+        setFormInputs({ ...formInputs, [e.target.name]: e.target.value });
     }
-    const handleSubmitForm = e => {
+
+    const handleSubmitForm = async (e) => {
         e.preventDefault();
+        try {
+            const token = await logInUser(formInputs.email, formInputs.password);
+            localStorage.setItem('token', token);
+        } catch (error) {
+            console.error(error.message);
+        }
+
     }
 
     const redirectTo = useNavigate();
 
-    console.log(isUserAuthorized);
+    const logInUser = async (email, password) => {
+        try {
+            const body = { email, password };
+            const response = await fetch("http://localhost:5000/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            const { token } = await response.json();
+            return token;
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
 
     return (
         <div className="login login-wrapper">
