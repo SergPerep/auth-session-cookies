@@ -70,13 +70,7 @@ a {
   background-color: var(--c-light-gray);
 }
 
-a, a:active {
-  color:var(--c-blue);
-}
 
-a:hover {
-  text-decoration: none;
-}
 
 /* Headers */
 
@@ -155,4 +149,16 @@ main {
   border-radius: 12px;
   text-align: center;
   font-size: 18px;
+}
+
+/* Links */
+
+button.link, button.link:active {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-size: 16px;
+  /*input has OS specific font-family*/
+  color: var(--c-blue);
+  cursor: pointer;
 }

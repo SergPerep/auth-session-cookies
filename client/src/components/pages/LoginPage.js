@@ -3,6 +3,7 @@ import Button from "../Button";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
+import HrefLessLink from "../../HrefLessLink";
 
 const LoginPage = () => {
     const { isUserAuthorized } = useContext(AuthContext);
@@ -42,7 +43,7 @@ const LoginPage = () => {
                         value={formInputs.password}
                         onChange={handleChangeInputValue}
                     />
-                    <a href="#" onClick={() => redirectTo("/signup")}>Don't have an accout yet?</a>
+                    <HrefLessLink onClick={() => redirectTo("/signup")}>Don't have an accout yet?</HrefLessLink>
                     <div className="btn-group">
                         <Button design='default'>Login</Button>
                     </div>

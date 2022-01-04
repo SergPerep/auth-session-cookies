@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HrefLessLink from "../../HrefLessLink";
 import Button from "../Button";
 import Input from "../Input";
 
@@ -51,7 +52,7 @@ const SignupPage = () => {
                         value={formInputs.password}
                         onChange={handleChangeInputValue}
                     />
-                    <a href="#" onClick={() => redirectTo("/login")}>Already have an account?</a>
+                    <HrefLessLink onClick={() => redirectTo("/login")}>Already have an account?</HrefLessLink>
                     <div className="btn-group">
                         <Button design='default'>Sign up</Button>
                     </div>
