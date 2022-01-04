@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const cors = require("cors");
+const pool = require('./db');
 const PORT = process.env.PORT;
 
 // Middlewares
@@ -10,8 +11,14 @@ app.use(express.json());
 app.use("/auth", require('./routes/jwtAuth'));
 
 
-app.get("/", (req, res) => {
-    res.send("<h1>Hello, underworld</h1>");
+app.get("/", async (req, res) => {
+    try {
+        const allUsers = await pool.query("SELECT * FROM users");
+        res.json(allUsers.rows);
+    } catch (error) {
+        // Feedback to client
+        console.error(error.message);
+    }
 })
 
 app.listen(PORT, () => {
