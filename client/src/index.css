@@ -11,11 +11,7 @@ h1, h2, h3, h4, h6, h6 {
   font-weight: bold;
   color: black;
 }
-h2 {
-  font-size: 18px;
-  line-height: 28px;
-  margin-bottom: 12px;
-}
+
 
 /* Box-sizing reset method*/
 
@@ -77,12 +73,17 @@ a {
 
 h1{
   font-size: 36px;
+  margin-bottom: 12px;
 }
 
-h2{
+h2 {
   font-size: 32px;
+  line-height: 28px;
+  margin-bottom: 12px;
 }
-
+p {
+  margin-bottom: 8px;
+}
 
 main {
   min-width: 900px;
@@ -135,4 +136,13 @@ main {
   background-color: var(--c-active);
   border: 1px solid var(--c-black-12);
   border-radius: 4px;
+}
+
+.dashboard{
+  padding: 48px;
+  margin: 12px 0;
+  background-color: white;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 18px;
 }
