@@ -1,11 +1,11 @@
 import Input from "../Input";
-import Button
-    from "../Button";
-import { useState } from "react";
+import Button from "../Button";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 
 const LoginPage = () => {
-
+    const { isUserAuthorized } = useContext(AuthContext);
     const [formInputs, setFormInputs] = useState({
         email: '',
         password: ''
@@ -18,6 +18,9 @@ const LoginPage = () => {
     }
 
     const redirectTo = useNavigate();
+
+    console.log(isUserAuthorized);
+
     return (
         <div className="login login-wrapper">
             <div className="login-container">
