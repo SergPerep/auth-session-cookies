@@ -21,3 +21,6 @@ VALUES
 
 -- Find user name with email
 SELECT name FROM users WHERE email='anna@example.com';
+
+-- Get password of a user
+SELECT password FROM users WHERE email='anna@example.com';

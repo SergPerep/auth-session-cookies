@@ -26,7 +26,7 @@ const genJWToken = (user_id) => {
 const checkWhetherUserAlreadyExist = async (email) => {
     try {
         const dbRes = await pool.query(`SELECT name FROM users WHERE email=$1;`, [email]);
-        const isUserAlreadyExists = dbRes.rows !== 0;
+        const isUserAlreadyExists = dbRes.rows === 0;
         return isUserAlreadyExists;
     } catch (error) {
         console.error(error.message);
@@ -38,7 +38,7 @@ router.post("/signup", checkEmailNamePass, async (req, res) => {
         const { name, email, password } = req.body;
 
         const isUserAlreadyExists = await checkWhetherUserAlreadyExist(email);
-        if(isUserAlreadyExists){
+        if (isUserAlreadyExists) {
             return res.status(400).json("User already exists. Try login.");
         }
 
@@ -58,10 +58,15 @@ router.post("/signup", checkEmailNamePass, async (req, res) => {
 });
 
 router.post("/login", checkEmailNamePass, async (req, res) => {
-    console.log("--login");
-    res.json("--login");
     try {
-
+        const { email, password } = req.body;
+        const dbRes = await pool.query(`SELECT password FROM users WHERE email=$1;`, [email]);
+        const hash = dbRes.rows[0].password;
+        const isUserVerified = await bcrypt.compare(password, hash);
+        if(!isUserVerified) {
+            return res.status(401).json("Email or password do not match");
+        }
+        res.json("You are authorized");
     } catch (err) {
         console.error(err.message);
     }
