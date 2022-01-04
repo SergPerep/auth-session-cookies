@@ -17,8 +17,8 @@ const genHash = async (password) => {
     }
 }
 
-const genJWToken = (user_id) => {
-    const payload = { user_id };
+const genJWToken = (userId) => {
+    const payload = { userId };
     const secret = process.env.JWT_SECRET;
     return jwt.sign(payload, secret, { expiresIn: "1hr" });
 }
@@ -47,11 +47,14 @@ router.post("/signup", checkEmailNamePass, async (req, res) => {
             `INSERT INTO
                 users (name, email, password)
             VALUES
-                ($1, $2, $3);`
+                ($1, $2, $3) RETURNING id;`
             , [name, email, hash]
         );
+        const userId = dbRes.rows[0].id;
+        const token = genJWToken(userId);
+        console.log(token);
         // Feedback to client
-        res.status(201).json("User has been successfully signed up");
+        res.status(201).json({ token });
     } catch (err) {
         console.error(err.message);
     }
@@ -60,18 +63,21 @@ router.post("/signup", checkEmailNamePass, async (req, res) => {
 router.post("/login", checkEmailNamePass, async (req, res) => {
     try {
         const { email, password } = req.body;
-        const dbRes = await pool.query(`SELECT password FROM users WHERE email=$1;`, [email]);
+        const dbRes = await pool.query(`SELECT password, id FROM users WHERE email=$1;`, [email]);
         const hash = dbRes.rows[0].password;
+
         const isUserVerified = await bcrypt.compare(password, hash);
-        if(!isUserVerified) {
+        if (!isUserVerified) {
             return res.status(401).json("Email or password do not match");
         }
-        res.json("You are authorized");
+
+        const userId = dbRes.rows[0].id;
+        const token = genJWToken(userId);
+
+        res.json({ token });
     } catch (err) {
         console.error(err.message);
     }
 });
-
-
 
 module.exports = router;
