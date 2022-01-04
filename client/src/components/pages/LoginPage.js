@@ -2,8 +2,10 @@ import Input from "../Input";
 import Button
     from "../Button";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+
     const [formInputs, setFormInputs] = useState({
         email: '',
         password: ''
@@ -14,6 +16,8 @@ const LoginPage = () => {
     const handleSubmitForm = e => {
         e.preventDefault();
     }
+
+    const redirectTo = useNavigate();
     return (
         <div className="login login-wrapper">
             <div className="login-container">
@@ -35,6 +39,7 @@ const LoginPage = () => {
                         value={formInputs.password}
                         onChange={handleChangeInputValue}
                     />
+                    <a href="#" onClick={() => redirectTo("/signup")}>Don't have an accout yet?</a>
                     <div className="btn-group">
                         <Button design='default'>Login</Button>
                     </div>

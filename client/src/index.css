@@ -58,6 +58,7 @@ a {
   --c-white-40: rgba(255, 255, 255, 0.4);
   --c-white-20: rgba(255, 255, 255, 0.2);
   --c-active: #4124a7;
+  --c-blue: #0942be;
   --c-error: #D21111;
 }
 
@@ -67,6 +68,14 @@ a {
   justify-content: center;
   align-items: center;
   background-color: var(--c-light-gray);
+}
+
+a, a:active {
+  color:var(--c-blue);
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 /* Headers */
@@ -122,6 +131,7 @@ main {
 
 .signup .btn-group, .login .btn-group {
   text-align: right;
+  margin-top: 12px;
 }
 
 .btn{
