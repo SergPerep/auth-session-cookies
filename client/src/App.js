@@ -1,23 +1,22 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import LoginPage from './components/pages/LoginPage';
 import SignupPage from './components/pages/SignupPage';
-import HomePage from './components/pages/HomePage';
 import DashboardPage from './components/pages/DashboardPage';
-import { AuthProvider } from './components/AuthContext';
+import { AuthContext } from './components/AuthContext';
+import { useContext } from 'react';
 
 function App() {
+  const { isUserAuthorized } = useContext(AuthContext);
   return (
-    <AuthProvider>
-      <main>
-        <Router>
-          <Routes>
-            <Route path="/" element={<DashboardPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-          </Routes>
-        </Router>
-      </main>
-    </AuthProvider>
+    <main>
+      <Router>
+        <Routes>
+          <Route path="/" element={isUserAuthorized ? <DashboardPage /> : <Navigate to="/login" />} />
+          <Route path="/login" element={isUserAuthorized ? <Navigate to="/" /> : <LoginPage />} />
+          <Route path="/signup" element={isUserAuthorized ? <Navigate to="/" /> : <SignupPage />} />
+        </Routes>
+      </Router>
+    </main>
   );
 }
 
