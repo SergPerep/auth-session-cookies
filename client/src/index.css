@@ -106,20 +106,20 @@ main {
   border-radius: 4px;
 }
 
-.signup-wrapper {
+.signup-wrapper, .login-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.signup-container{
+.signup-container, .login-container{
   background-color: white;
   padding: 24px;
   min-width: 400px;
   border-radius: 12px;
 }
 
-.signup .btn-group {
+.signup .btn-group, .login .btn-group {
   text-align: right;
 }
 
