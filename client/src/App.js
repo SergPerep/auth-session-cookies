@@ -3,7 +3,7 @@ import LoginPage from './components/pages/LoginPage';
 import SignupPage from './components/pages/SignupPage';
 import DashboardPage from './components/pages/DashboardPage';
 import { AuthContext } from './components/AuthContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 function App() {
   const { isUserAuthorized } = useContext(AuthContext);

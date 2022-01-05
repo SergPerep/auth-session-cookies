@@ -39,10 +39,12 @@ const SignupPage = () => {
                 body: JSON.stringify(body)
             })
             const { token } = await response.json();
+            return token;
         } catch (error) {
             console.error(error.message);
         }
     }
+    
     return (
         <div className="signup signup-wrapper">
             <div className="signup-container">
