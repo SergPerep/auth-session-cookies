@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const pool = require("../db");
 const checkEmailNamePass = require('../middlewares/checkEmailNamePass');
-const authorizeUser = require('../middlewares/authorizeUser');
+const verifyToken = require('../middlewares/verifyToken');
 
 
 const genHash = async (password) => {
@@ -81,9 +81,9 @@ router.post("/login", checkEmailNamePass, async (req, res) => {
     }
 });
 
-router.get("/token-verification", authorizeUser, async (req, res) => {
+router.get("/token-verification", verifyToken, async (req, res) => {
     try {
-        // If authorize-middleware let request through,
+        // If verifyToken-middleware lets request through,
         // it means that token is valid
         const isTokenValid = true;
         res.json(isTokenValid);

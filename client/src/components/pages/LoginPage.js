@@ -6,7 +6,7 @@ import { AuthContext } from "../AuthContext";
 import HrefLessLink from "../../HrefLessLink";
 
 const LoginPage = () => {
-    const { isUserAuthorized } = useContext(AuthContext);
+    const { verifyToken } = useContext(AuthContext);
     const [formInputs, setFormInputs] = useState({
         email: '',
         password: ''
@@ -20,6 +20,7 @@ const LoginPage = () => {
         try {
             const token = await logInUser(formInputs.email, formInputs.password);
             localStorage.setItem('token', token);
+            verifyToken();
         } catch (error) {
             console.error(error.message);
         }
