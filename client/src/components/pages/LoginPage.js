@@ -24,7 +24,6 @@ const LoginPage = () => {
         } catch (error) {
             console.error(error.message);
         }
-
     }
 
     const redirectTo = useNavigate();
@@ -45,36 +44,38 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="login login-wrapper">
-            <div className="login-container">
-                <h1>Login</h1>
-                <form onSubmit={handleSubmitForm}>
-                    <Input
-                        label="Email"
-                        name="email"
-                        type="email"
-                        placeholder="ivan@example.com"
-                        value={formInputs.email}
-                        onChange={handleChangeInputValue}
-                    />
-                    <Input
-                        label="Password"
-                        name="password"
-                        type="password"
-                        placeholder="******"
-                        value={formInputs.password}
-                        onChange={handleChangeInputValue}
-                    />
-                    <HrefLessLink onClick={e => {
-                        e.preventDefault();
-                        redirectTo("/signup")
-                    }}>Don't have an accout yet?</HrefLessLink>
-                    <div className="btn-group">
-                        <Button design='default'>Login</Button>
-                    </div>
-                </form>
+        <main>
+            <div className="login login-wrapper">
+                <div className="login-container">
+                    <h1>Login</h1>
+                    <form onSubmit={handleSubmitForm}>
+                        <Input
+                            label="Email"
+                            name="email"
+                            type="email"
+                            placeholder="ivan@example.com"
+                            value={formInputs.email}
+                            onChange={handleChangeInputValue}
+                        />
+                        <Input
+                            label="Password"
+                            name="password"
+                            type="password"
+                            placeholder="******"
+                            value={formInputs.password}
+                            onChange={handleChangeInputValue}
+                        />
+                        <HrefLessLink onClick={e => {
+                            e.preventDefault();
+                            redirectTo("/signup")
+                        }}>Don't have an accout yet?</HrefLessLink>
+                        <div className="btn-group">
+                            <Button design='default'>Login</Button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        </main>
     )
 }
 

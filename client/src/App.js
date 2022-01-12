@@ -8,7 +8,7 @@ import { useContext } from 'react';
 function App() {
   const { isUserAuthorized } = useContext(AuthContext);
   return (
-    <main>
+    
       <Router>
         <Routes>
           <Route path="/" element={isUserAuthorized ? <DashboardPage /> : <Navigate to="/login" />} />
@@ -16,7 +16,6 @@ function App() {
           <Route path="/signup" element={isUserAuthorized ? <Navigate to="/" /> : <SignupPage />} />
         </Routes>
       </Router>
-    </main>
   );
 }
 

@@ -44,46 +44,48 @@ const SignupPage = () => {
             console.error(error.message);
         }
     }
-    
+
     return (
-        <div className="signup signup-wrapper">
-            <div className="signup-container">
-                <h1>Sign up</h1>
-                <form onSubmit={handleSubmitForm}>
-                    <Input
-                        label="Name"
-                        name="name"
-                        type="text"
-                        placeholder="Ivan"
-                        value={formInputs.name}
-                        onChange={handleChangeInputValue}
-                    />
-                    <Input
-                        label="Email"
-                        name="email"
-                        type="email"
-                        placeholder="ivan@example.com"
-                        value={formInputs.email}
-                        onChange={handleChangeInputValue}
-                    />
-                    <Input
-                        label="Password"
-                        name="password"
-                        type="password"
-                        placeholder="******"
-                        value={formInputs.password}
-                        onChange={handleChangeInputValue}
-                    />
-                    <HrefLessLink onClick={e => {
-                        e.preventDefault();
-                        redirectTo("/login")
-                    }}>Already have an account?</HrefLessLink>
-                    <div className="btn-group">
-                        <Button design='default'>Sign up</Button>
-                    </div>
-                </form>
+        <main>
+            <div className="signup signup-wrapper">
+                <div className="signup-container">
+                    <h1>Sign up</h1>
+                    <form onSubmit={handleSubmitForm}>
+                        <Input
+                            label="Name"
+                            name="name"
+                            type="text"
+                            placeholder="Ivan"
+                            value={formInputs.name}
+                            onChange={handleChangeInputValue}
+                        />
+                        <Input
+                            label="Email"
+                            name="email"
+                            type="email"
+                            placeholder="ivan@example.com"
+                            value={formInputs.email}
+                            onChange={handleChangeInputValue}
+                        />
+                        <Input
+                            label="Password"
+                            name="password"
+                            type="password"
+                            placeholder="******"
+                            value={formInputs.password}
+                            onChange={handleChangeInputValue}
+                        />
+                        <HrefLessLink onClick={e => {
+                            e.preventDefault();
+                            redirectTo("/login")
+                        }}>Already have an account?</HrefLessLink>
+                        <div className="btn-group">
+                            <Button design='default'>Sign up</Button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        </main>
 
     )
 }

@@ -71,7 +71,6 @@ a {
 }
 
 
-
 /* Headers */
 
 h1{
@@ -89,7 +88,7 @@ p {
 }
 
 main {
-  min-width: 900px;
+  width: 900px;
   padding: 16px;
 }
 .input-field{
@@ -142,15 +141,6 @@ main {
   border-radius: 4px;
 }
 
-.dashboard{
-  padding: 48px;
-  margin: 12px 0;
-  background-color: white;
-  border-radius: 12px;
-  text-align: center;
-  font-size: 18px;
-}
-
 /* Links */
 
 button.link, button.link:active {
@@ -161,4 +151,32 @@ button.link, button.link:active {
   /*input has OS specific font-family*/
   color: var(--c-blue);
   cursor: pointer;
+}
+
+/* Cards */
+
+.card-list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card {
+  width: calc(100% / 3 - 16px * 2 / 3);
+  background-color: black;
+  color: white;
+  padding: 24px;
+  border-radius: 8px;
+  
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.card-desc {
+  line-height: 24px;
 }
