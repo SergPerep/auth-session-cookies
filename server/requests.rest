@@ -1,0 +1,26 @@
+
+# Get all list of all users
+GET http://localhost:5000/
+
+###
+
+# Sign up
+POST http://localhost:5000/auth/signup
+Content-Type: application/json
+
+{
+    "name": "Bob",
+    "email": "bob-the-builder@gmail.com",
+    "password" : "fixNotBrake"
+}
+
+###
+
+# Login
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email": "bob-the-builder@gmail.com",
+    "password": "fixNotBrake"
+}

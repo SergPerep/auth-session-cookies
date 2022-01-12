@@ -1,5 +1,5 @@
 -- Create database
-CREATE DATABASE jwt_auth;
+CREATE DATABASE auth_sessions_cookies;
 
 -- Users schema
 CREATE TABLE users (
