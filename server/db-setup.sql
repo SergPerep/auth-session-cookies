@@ -1,7 +1,7 @@
 -- Create database
 CREATE DATABASE auth_sessions_cookies;
 
---Go to database
+-- Connect to database
 \c auth_sessions_cookies;
 
 -- Users schema
