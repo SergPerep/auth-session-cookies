@@ -5,10 +5,11 @@ const cors = require("cors");
 const pool = require('./db');
 const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
-const TWO_HOURS = 1000 * 60 * 60 * 2; // 2 hours
 
 const {
+    NODE_ENV = "development",
     PORT = 5000,
+    SESS_SECRET = "session secret",
 } = process.env;
 
 // Middlewares
@@ -17,7 +18,8 @@ app.use(express.json());
 app.use(session({
     resave: false,
     saveUninitialized: true,
-    secret: "session secret",
+    secret: SESS_SECRET,
+    secure: NODE_ENV === "production",
     store: new pgSession({
         pool: pool,
         tableName: "session"
