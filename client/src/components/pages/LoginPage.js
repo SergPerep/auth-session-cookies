@@ -6,7 +6,7 @@ import { AuthContext } from "../AuthContext";
 import HrefLessLink from "../../HrefLessLink";
 
 const LoginPage = () => {
-    const { verifyToken } = useContext(AuthContext);
+    const { checkAuth } = useContext(AuthContext);
     const [formInputs, setFormInputs] = useState({
         email: '',
         password: ''
@@ -17,10 +17,10 @@ const LoginPage = () => {
 
     const handleSubmitForm = async (e) => {
         e.preventDefault();
+        console.log("-- handleSubmitForm() --")
         try {
-            const token = await logInUser(formInputs.email, formInputs.password);
-            localStorage.setItem('token', token);
-            verifyToken();
+            await logInUser(formInputs.email, formInputs.password);
+            checkAuth();
         } catch (error) {
             console.error(error.message);
         }
@@ -32,12 +32,13 @@ const LoginPage = () => {
         try {
             const body = { email, password };
             const response = await fetch("http://localhost:5000/auth/login", {
+                credentials: 'include',
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
-            const { token } = await response.json();
-            return token;
+            const message = await response.json();
+            console.log({ message });
         } catch (error) {
             console.error(error.message);
         }

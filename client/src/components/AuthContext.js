@@ -4,33 +4,41 @@ export const AuthContext = createContext();
 
 export const AuthProvider = props => {
     const [isUserAuthorized, setIsUserAuthorized] = useState(false);
-    
-    const logOut = () => {
-        setIsUserAuthorized(false);
-        localStorage.removeItem("token");
+
+    const logOut = async () => {
+        try {
+            const serverData = await fetch("http://localhost:5000/auth/logout", {
+                credentials: 'include'
+            });
+            const message = await serverData.json();
+            console.log(message);
+            setIsUserAuthorized(false);
+        } catch (error) {
+            error.console(error.message);
+        }
     }
 
-    const verifyToken = async () => {
+    const checkAuth = async () => {
         try {
-            const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:5000/auth/token-verification", {
-                headers: { token }
+            const serverData = await fetch("http://localhost:5000/auth/check-auth", {
+                credentials: 'include'
             });
-            const data = await response.json();
-            setIsUserAuthorized(data === true);
+            const { auth } = await serverData.json();
+            setIsUserAuthorized(auth ? auth : false);
+            console.log({ auth })
         } catch (error) {
             console.error(error.message);
         }
     }
-    
+
     useEffect(() => {
-        verifyToken();
-    }, []);
+        checkAuth();
+    }, [])
 
     const valuesToShare = {
         isUserAuthorized,
         setIsUserAuthorized,
-        verifyToken,
+        checkAuth,
         logOut
     };
     return <AuthContext.Provider value={valuesToShare}>

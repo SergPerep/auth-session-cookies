@@ -1,95 +1,107 @@
+// npm modules
 const router = require('express').Router();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const pool = require("../db");
-const checkEmailNamePass = require('../middlewares/checkEmailNamePass');
-const verifyToken = require('../middlewares/verifyToken');
 
+// Utils
+const validateEmail = require("../utils/validateEmail");
+const validatePassword = require("../utils/validatePassword");
+const checkWhetherUserAlreadyExists = require("../utils/checkWhetherUserAlreadyExists");
+const verifyPassword = require("../utils/verifyPassword");
+const genHash = require("../utils/genHash");
 
-const genHash = async (password) => {
+router.get("/check-auth", (req, res) => {
+    const userId = req.session.userId;
+    if (!userId) return res.json({ auth: false });
+    res.json({ auth: true })
+})
+
+router.post("/login", async (req, res) => {
     try {
-        const saltRounds = 12;
-        const salt = await bcrypt.genSalt(saltRounds);
-        const hash = await bcrypt.hash(password, salt);
-        return hash;
+        console.log("-- login --")
+        if (req.session?.userId) return res.json("You are already authenticated");
+
+        const { email, password } = req.body;
+
+        if (!email && !password) return res.status(400).json("Missing credentials");
+
+        const isEmailValid = validateEmail(email);
+        if (!isEmailValid) return res.status(400).json("Invalid email");
+
+        const isPasswordValid = validatePassword(password);
+        if (!isPasswordValid) return res.status(400).json("Invalid password");
+
+        const isUserAlreadyExists = await checkWhetherUserAlreadyExists(email);
+        if (!isUserAlreadyExists) return res.status(400).json("User doesn't exist. Try to sign up")
+
+        const isPasswordVerified = await verifyPassword(email, password);
+        if (!isPasswordVerified) return res.status(400).json("Email and/or password do not match");
+
+        // Remove password-value from request
+        req.body.password = undefined;
+
+        const dbData = await pool.query(`SELECT id FROM users WHERE email=$1`, [email]);
+        const userId = dbData.rows[0].id;
+
+        if (!userId) return res.status(401);
+        req.session.userId = userId;
+        // res.redirect("check-auth");
+        // console.log(req.session.userId);
+        res.status(201).json("You are succesfully loged in");
+
     } catch (error) {
         console.error(error.message);
     }
-}
+})
 
-const genJWToken = (userId) => {
-    const payload = { userId };
-    const secret = process.env.JWT_SECRET;
-    return jwt.sign(payload, secret, { expiresIn: "1hr" });
-}
-
-const checkWhetherUserAlreadyExist = async (email) => {
+router.post("/register", async (req, res) => {
     try {
-        const dbRes = await pool.query(`SELECT name FROM users WHERE email=$1;`, [email]);
-        const isUserAlreadyExists = dbRes.rows === 0;
-        return isUserAlreadyExists;
-    } catch (error) {
-        console.error(error.message);
-    }
-}
 
-router.post("/signup", checkEmailNamePass, async (req, res) => {
-    try {
+        if (req.session?.userId) return res.json("You are already authenticated");
+
         const { name, email, password } = req.body;
+        if (![email, name, password].every(Boolean)) return res.status(400).json("Missing credentials");
 
-        const isUserAlreadyExists = await checkWhetherUserAlreadyExist(email);
-        if (isUserAlreadyExists) {
-            return res.status(400).json("User already exists. Try login.");
-        }
+        if (!email) return res.status(400).json("Missing credentials");
+
+        const isEmailValid = validateEmail(email);
+        if (!isEmailValid) res.status(400).json("Invalid email");
+
+        const isUserAlreadyExists = await checkWhetherUserAlreadyExists(email);
+        if (isUserAlreadyExists) return res.status(400).json("User already exists. Try to log in");
+
+        const isPasswordValid = validatePassword(password);
+        if (!isPasswordValid) return res.status(400).json("Invalid password");
 
         const hash = await genHash(password);
-        const dbRes = await pool.query(
-            `INSERT INTO
+
+        req.body.password = hash;
+
+        const dbData = await pool.query(`
+            INSERT INTO
                 users (name, email, password)
-            VALUES
-                ($1, $2, $3) RETURNING id;`
-            , [name, email, hash]
-        );
-        const userId = dbRes.rows[0].id;
-        const token = genJWToken(userId);
-        console.log(token);
-        // Feedback to client
-        res.status(201).json({ token });
-    } catch (err) {
-        console.error(err.message);
-    }
-});
+            VALUES ($1, $2, $3) RETURNING id`, [name, email, hash]);
+        const userId = dbData.rows[0].id;
+        req.session.userId = userId;
+        res.json("You are succesfully signed up");
+        // res.redirect("check-auth");
+        //res.status(201).redirect("/dashboard");
 
-router.post("/login", checkEmailNamePass, async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const dbRes = await pool.query(`SELECT password, id FROM users WHERE email=$1;`, [email]);
-        const hash = dbRes.rows[0].password;
-
-        const isUserVerified = await bcrypt.compare(password, hash);
-        if (!isUserVerified) {
-            return res.status(401).json("Email or password do not match");
-        }
-
-        const userId = dbRes.rows[0].id;
-        const token = genJWToken(userId);
-
-        res.json({ token });
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-router.get("/token-verification", verifyToken, async (req, res) => {
-    try {
-        // If verifyToken-middleware lets request through,
-        // it means that token is valid
-        const isTokenValid = true;
-        res.json(isTokenValid);
     } catch (error) {
         console.error(error.message);
     }
-});
+})
+
+router.get("/logout", (req, res) => {
+
+    if (!req.session?.userId) return res.json("You are not authenticated");
+
+    req.session.destroy(err => { if (err) throw err })
+
+    res.clearCookie('connect.sid');
+
+    res.json({ auth: false });
+
+})
 
 module.exports = router;

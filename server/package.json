@@ -14,11 +14,13 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-pg-simple": "^7.0.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
+    "email-validator": "^2.0.4",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
-    "jsonwebtoken": "^8.5.1",
+    "password-validator": "^5.2.1",
     "pg": "^8.7.1"
   },
   "devDependencies": {

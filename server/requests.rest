@@ -4,14 +4,18 @@ GET http://localhost:5000/
 
 ###
 
-# Sign up
-POST http://localhost:5000/auth/signup
+GET http://localhost:5000/session
+
+###
+
+# Register
+POST http://localhost:5000/auth/register
 Content-Type: application/json
 
 {
     "name": "Bob",
     "email": "bob-the-builder@gmail.com",
-    "password" : "fixNotBrake"
+    "password" : "fixNotBrake22"
 }
 
 ###
@@ -22,5 +26,20 @@ Content-Type: application/json
 
 {
     "email": "bob-the-builder@gmail.com",
-    "password": "fixNotBrake"
+    "password": "fixNotBrake22"
 }
+
+###
+
+# Logout
+GET http://localhost:5000/auth/logout
+
+###
+
+# Dashboard
+GET http://localhost:5000/dashboard
+
+###
+
+# Check auth
+GET http://localhost:5000/auth/check-auth

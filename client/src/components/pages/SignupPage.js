@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HrefLessLink from "../../HrefLessLink";
+import { AuthContext } from "../AuthContext";
 import Button from "../Button";
 import Input from "../Input";
 
@@ -13,18 +14,19 @@ const SignupPage = () => {
         password: ''
     });
 
+    const {checkAuth} = useContext(AuthContext);
+
     const handleChangeInputValue = e => {
         setFormInputs({ ...formInputs, [e.target.name]: e.target.value });
     }
 
     const handleSubmitForm = async e => {
+        e.preventDefault();
         try {
-            const token = await signUpNewUser(formInputs.name, formInputs.email, formInputs.password);
-            localStorage.setItem("token", token);
+            await signUpNewUser(formInputs.name, formInputs.email, formInputs.password);
         } catch (error) {
             console.error(error.message);
         }
-        e.preventDefault();
         console.log("-- submit");
     }
 
@@ -33,13 +35,15 @@ const SignupPage = () => {
     const signUpNewUser = async (name, email, password) => {
         try {
             const body = { name, email, password };
-            const response = await fetch("http://localhost:5000/auth/signup", {
+            const serverData = await fetch("http://localhost:5000/auth/register", {
+                credentials: 'include',
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             })
-            const { token } = await response.json();
-            return token;
+            const message = await serverData.json();
+            console.log({ message });
+            checkAuth();
         } catch (error) {
             console.error(error.message);
         }
