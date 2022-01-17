@@ -1,20 +1,23 @@
 # Authentication with express session
-Mini project and study case that uses session-cookie-based authentification. 
+Simple example of express session authentication with cookies. 
 
-Client side is a react-app that have 3 «pages»:
-- Login page
-- Signup page
-- Dashboard page
+## Overview
 
-User have to autheticate thought Login or Signup pages to reach Dashboard page otherwise he can't access it.
+Client side is a simple react-app that have 3 «pages»: Login page, Signup page and Dashboard page.
 
-Server API routes are:
+User has to autheticate thought Login or Signup pages to reach Dashboard page otherwise he can't access it.
+
+When user interacts with server, it creates a session. Session has an id (session id), which then put in a cookie and sent back to client. Server and client then constantly throw back and forward requests and responses with cookie attacht to them. That way server always knows which user corresponds with which session.
+
+When user is being authenticated, server finds his id (user id) inside database, and adds it to session. Now middleware can check whether corresponding session has user id and let user to Dashboard page.
+
+Basic server API routes are:
 - Register `POST` `/auth/register`
-- Login `POST` `http://localhost:5000/auth/login`
+- Login `POST` `/auth/login`
 - Logout `GET` `/auth/logout`
-- Check auth `GET` /auth/check-auth
+- Check auth `GET` `/auth/check-auth`
 
-Full list of routes you can check inside [requests.rest](/server/requests.rest) file.
+Full list of routes you can check inside [requests.rest](/server/requests.rest). You can use VS Code extension [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) to send requests through that file on a local machine.
 
 ## Dependencies
 List of modules and packages that are used in this project.
@@ -34,19 +37,10 @@ List of modules and packages that are used in this project.
 * [Create react app](https://github.com/facebook/create-react-app) to frontend
 * [React-router-dom](https://github.com/remix-run/react-router/tree/main/packages/react-router-dom) to rout and redirect
 
-
-
-
 ## Installation
-After you clone repo on local mashine you would want to configure several things:
-- Install dependencies
-- Set up .env
-- Configure database
-    - To store user info
-    - To store sessions
+After you cloned repository do these things.
 
-
-## Install dependencies
+### Install dependencies
 For server:
 ```
 npm install --prefix ./server
@@ -56,7 +50,7 @@ For client:
 npm install --prefix ./client
 ```
 
-## Set up .env
+### Set up .env
 Create inside server-folder .env-file and add define inside:
 * PG_USER=postgres
 * PG_HOST=localhost
@@ -68,22 +62,18 @@ Command that you might want to use to generate SESS_SECRET:
 ```
 node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
 ```
-## Configure database
-For main database I use postgreSQL.
+### Configure database
+I use postgreSQL database for storing both user's info and sessions.
+
+Run this to create database and user table:
 
 ```
 psql postgres < server/db-startup-setup.sql;
 ```
-
-### Session tables
-
-To store sessions I use once again postrgeSQL with npm-module connect-pg-simple.
-
-To configure session tables inside auth_session_cookies database use sql-file provided by connect-pg-simple:
+Run this to create session tables:
 
 ```
 psql auth_session_cookies < server/node_modules/connect-pg-simple/table.sql;
 ```
-
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
