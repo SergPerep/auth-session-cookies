@@ -38,13 +38,6 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-/*
-app.use(async (req, res, next) => {
-    printData("Before express-session", req, res);
-    next();
-})
-*/
-
 
 app.use(session({
     resave: false,
@@ -57,35 +50,18 @@ app.use(session({
     }),
     cookie: {
         maxAge: 1000 * 60 * 60 * 2, // 2 hours
-        // sameSite: "none" // Allow the differt origin cookie
     }
 }));
 
-/*
-
-app.use((req, res, next) => {
-    printData("After express-session", req, res);
-    next();
-})
-*/
 app.use("/auth", require("./routes/auth"));
 
-
-
 app.get("/session", (req, res) => {
-
-    printData("Server", req, res);
-
     res.json({
         sessionID: req.sessionID,
         session: req.session,
         cookies: req.cookies
     });
-
-    printData("After response", req, res);
-
 });
-
 
 app.get("/dashboard", requireAuth, (req, res) => {
     res.json("This is dashboard");

@@ -45,8 +45,6 @@ router.post("/login", async (req, res) => {
 
         if (!userId) return res.status(401);
         req.session.userId = userId;
-        // res.redirect("check-auth");
-        // console.log(req.session.userId);
         res.status(201).json("You are succesfully loged in");
 
     } catch (error) {
@@ -84,8 +82,6 @@ router.post("/register", async (req, res) => {
         const userId = dbData.rows[0].id;
         req.session.userId = userId;
         res.json("You are succesfully signed up");
-        // res.redirect("check-auth");
-        //res.status(201).redirect("/dashboard");
 
     } catch (error) {
         console.error(error.message);
