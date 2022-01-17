@@ -11,7 +11,7 @@ When user interacts with server, it creates a session. Session has an id (sessio
 
 When user is being authenticated throug Signup or Login pages, server finds his id (user id) inside database, and adds it to session. Now middleware can check whether corresponding session has user id and let user to Dashboard page.
 
-Basic server API routes are:
+Basic server API routes:
 - Register `POST` `/auth/register`
 - Login `POST` `/auth/login`
 - Logout `GET` `/auth/logout`
