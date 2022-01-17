@@ -52,13 +52,13 @@ npm install --prefix ./client
 
 ### Set up .env
 Create inside server-folder .env-file and add define inside:
-* PG_USER=postgres
-* PG_HOST=localhost
-* PG_PORT=[probably "5432"]
-* PG_DATABASE=auth_session_cookies
-* SESS_SECRET=[secret key]
+* `PG_USER=postgres`
+* `PG_HOST=localhost`
+* `PG_PORT=[probably "5432"]`
+* `PG_DATABASE=auth_session_cookies`
+* `SESS_SECRET=[secret key]`
 
-Command that you might want to use to generate SESS_SECRET:
+Run this to generate SESS_SECRET:
 ```
 node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
 ```
