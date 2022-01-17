@@ -1,11 +1,18 @@
 # Authentication with express session
-Mini project that uses session-cookie-based authentification. 
+Mini project and study case that uses session-cookie-based authentification. 
 
-Basic functions:
-- Register new user
-- Login user
-- Authenticate user
-- Verify user
+Client side is a react-app that have 3 «pages»:
+- Login page
+- Signup page
+- Dashboard page
+
+User have to autheticate thought Login or Signup pages to reach Dashboard page otherwise he can't access it.
+
+Server API routes are:
+- Register `POST` `/auth/register`
+- Login `POST` `http://localhost:5000/auth/login`
+- Logout `GET` `/auth/logout`
+- Check auth `GET` /auth/check-auth
 
 Full list of routes you can check inside [requests.rest](/server/requests.rest) file.
 
