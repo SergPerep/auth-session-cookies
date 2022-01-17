@@ -1,4 +1,4 @@
-// npm modules
+// Modules
 const router = require('express').Router();
 require('dotenv').config();
 const pool = require("../db");
@@ -10,6 +10,7 @@ const checkWhetherUserAlreadyExists = require("../utils/checkWhetherUserAlreadyE
 const verifyPassword = require("../utils/verifyPassword");
 const genHash = require("../utils/genHash");
 
+// Routes
 router.get("/check-auth", (req, res) => {
     const userId = req.session.userId;
     if (!userId) return res.json({ auth: false });
