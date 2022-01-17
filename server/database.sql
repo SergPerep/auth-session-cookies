@@ -1,5 +1,5 @@
 -- Create database
-CREATE DATABASE auth_sessions_cookies;
+CREATE DATABASE auth_session_cookies;
 
 -- Users schema
 CREATE TABLE users (

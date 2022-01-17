@@ -1,8 +1,9 @@
+
 -- Create database
-CREATE DATABASE auth_sessions_cookies;
+CREATE DATABASE auth_session_cookies;
 
 -- Connect to database
-\c auth_sessions_cookies;
+\c auth_session_cookies;
 
 -- Users schema
 CREATE TABLE users (
@@ -19,5 +20,5 @@ VALUES
     (
         'Anna',
         'anna@example.com',
-        'blakgsfbhk-fwkbafe-aebfhklb'
+        'blakgsfbhk-fwkbafe-aebfhklb7623'
     );

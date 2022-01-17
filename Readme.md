@@ -17,4 +17,22 @@ Create inside server folder .env and add define inside:
 * PG_USER=postgres
 * PG_HOST=localhost
 * PG_PORT=[probably "5432"]
-* PG_DATABASE=auth_sessions_cookies
+* PG_DATABASE=auth_session_cookies
+
+
+# Database setup
+For main database I use postgreSQL.
+
+```
+psql postgres < server/db-startup-setup.sql;
+```
+
+### Session tables
+
+To store sessions I use once again postrgeSQL with npm-module connect-pg-simple.
+
+To configure session tables inside auth_session_cookies database use sql-file provided by connect-pg-simple:
+
+```
+psql auth_session_cookies < server/node_modules/connect-pg-simple/table.sql;
+```
