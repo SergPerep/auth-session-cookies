@@ -15,19 +15,6 @@ const LoginPage = () => {
         setFormInputs({ ...formInputs, [e.target.name]: e.target.value });
     }
 
-    const handleSubmitForm = async (e) => {
-        e.preventDefault();
-        console.log("-- handleSubmitForm() --")
-        try {
-            await logInUser(formInputs.email, formInputs.password);
-            checkAuth();
-        } catch (error) {
-            console.error(error.message);
-        }
-    }
-
-    const redirectTo = useNavigate();
-
     const logInUser = async (email, password) => {
         try {
             const body = { email, password };
@@ -38,11 +25,19 @@ const LoginPage = () => {
                 body: JSON.stringify(body)
             });
             const message = await response.json();
-            console.log({ message });
+            console.log(message);
+            checkAuth();
         } catch (error) {
             console.error(error.message);
         }
     }
+
+    const handleSubmitForm = async (e) => {
+        e.preventDefault();
+        logInUser(formInputs.email, formInputs.password);
+    }
+
+    const redirectTo = useNavigate();
 
     return (
         <main>

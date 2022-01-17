@@ -14,23 +14,11 @@ const SignupPage = () => {
         password: ''
     });
 
-    const {checkAuth} = useContext(AuthContext);
+    const { checkAuth } = useContext(AuthContext);
 
     const handleChangeInputValue = e => {
         setFormInputs({ ...formInputs, [e.target.name]: e.target.value });
     }
-
-    const handleSubmitForm = async e => {
-        e.preventDefault();
-        try {
-            await signUpNewUser(formInputs.name, formInputs.email, formInputs.password);
-        } catch (error) {
-            console.error(error.message);
-        }
-        console.log("-- submit");
-    }
-
-    const redirectTo = useNavigate();
 
     const signUpNewUser = async (name, email, password) => {
         try {
@@ -42,12 +30,22 @@ const SignupPage = () => {
                 body: JSON.stringify(body)
             })
             const message = await serverData.json();
-            console.log({ message });
+            console.log(message);
             checkAuth();
         } catch (error) {
             console.error(error.message);
         }
     }
+
+    const handleSubmitForm = e => {
+        e.preventDefault();
+        console.log("-- submit");
+        signUpNewUser(formInputs.name, formInputs.email, formInputs.password);
+    }
+
+    const redirectTo = useNavigate();
+
+
 
     return (
         <main>
