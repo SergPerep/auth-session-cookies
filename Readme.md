@@ -7,9 +7,9 @@ Client side is a simple react-app that have 3 «pages»: Login page, Signup page
 
 User has to autheticate thought Login or Signup pages to reach Dashboard page otherwise he can't access it.
 
-When user interacts with server, it creates a session. Session has an id (session id), which then put in a cookie and sent back to client. Server and client then constantly throw back and forward requests and responses with cookie attacht to them. That way server always knows which user corresponds with which session.
+When user interacts with server, it creates a session. Session has an id (session id), which then put in a cookie and sent back to client. Server and client then constantly throw back and forward requests and responses with cookie attached to them. That way server always knows which user corresponds with which session if it has.
 
-When user is being authenticated, server finds his id (user id) inside database, and adds it to session. Now middleware can check whether corresponding session has user id and let user to Dashboard page.
+When user is being authenticated throug Signup or Login pages, server finds his id (user id) inside database, and adds it to session. Now middleware can check whether corresponding session has user id and let user to Dashboard page.
 
 Basic server API routes are:
 - Register `POST` `/auth/register`
@@ -28,8 +28,8 @@ List of modules and packages that are used in this project.
 * [Connect-pg-simple](https://github.com/voxpelli/node-connect-pg-simple) to connect sessions to sessions in postgreSQL database
 * [Bcryptjs](https://github.com/dcodeIO/bcrypt.js) to hash paswords
 * [Dotenv](https://www.npmjs.com/package/dotenv) to load environmental variables from a `.env` to `process.env`
-* [Password-validator](https://github.com/tarunbatra/password-validator) to forse user to use certain format for passwords
-* [Email-validator](https://github.com/manishsaraan/email-validator) to check wheather email provided by user is valid one
+* [Password-validator](https://github.com/tarunbatra/password-validator) to force user to use certain format for passwords
+* [Email-validator](https://github.com/manishsaraan/email-validator) to check whether email provided by user is valid one
 * [PG](https://github.com/brianc/node-postgres) to connect server to postgreSQL database
 * [Nodemon](https://github.com/remy/nodemon) to automaticaly restart server while developing
 * [Cookie-parser](https://github.com/expressjs/cookie-parser) to read cookies inside request for debugging
@@ -74,6 +74,17 @@ Run this to create session tables:
 
 ```
 psql auth_session_cookies < server/node_modules/connect-pg-simple/table.sql;
+```
+
+### Run project
+Run server
+```
+npm --prefix ./server run dev
+```
+
+Run client
+```
+npm --prefix ./client start
 ```
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
