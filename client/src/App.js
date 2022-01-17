@@ -11,9 +11,10 @@ function App() {
     
       <Router>
         <Routes>
-          <Route path="/" element={isUserAuthorized ? <DashboardPage /> : <Navigate to="/login" />} />
-          <Route path="/login" element={isUserAuthorized ? <Navigate to="/" /> : <LoginPage />} />
-          <Route path="/signup" element={isUserAuthorized ? <Navigate to="/" /> : <SignupPage />} />
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route path="/dashboard" element={isUserAuthorized ? <DashboardPage /> : <Navigate to="/login" />} />
+          <Route path="/login" element={isUserAuthorized ? <Navigate to="/dashboard" /> : <LoginPage />} />
+          <Route path="/signup" element={isUserAuthorized ? <Navigate to="/dashboard" /> : <SignupPage />} />
         </Routes>
       </Router>
   );
