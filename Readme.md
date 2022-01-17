@@ -34,7 +34,7 @@ List of modules and packages that are used in this project.
 * [Nodemon](https://github.com/remy/nodemon) to automaticaly restart server while developing
 * [Cookie-parser](https://github.com/expressjs/cookie-parser) to read cookies inside request for debugging
 ### Client
-* [Create react app](https://github.com/facebook/create-react-app) to frontend
+* [Create react app](https://github.com/facebook/create-react-app) to develop frontend
 * [React-router-dom](https://github.com/remix-run/react-router/tree/main/packages/react-router-dom) to rout and redirect
 
 ## Installation
