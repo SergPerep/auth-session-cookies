@@ -1,26 +1,36 @@
-# Authorization with sessions and cookies
+
+# Set up
+After you clone repo on local mashine you would want to configure several things:
+- Install dependencies
+- Set up .env
+- Configure database
+    - To store user info
+    - To store sessions
+
 
 ## Install dependencies
-cd client
-npm i
-
-cd server
-npm i
-
-## Set up database
-Run in CL postgres content of the server/db-setup.sql
+For server:
+```
+npm install --prefix ./server
+```
+For client:
+```
+npm install --prefix ./client
+```
 
 ## Set up .env
-Create inside server folder .env and add define inside:
-* PORT=5000
-* JWT_SECRET=[Secret for JWT generation]
+Create inside server-folder .env-file and add define inside:
 * PG_USER=postgres
 * PG_HOST=localhost
 * PG_PORT=[probably "5432"]
 * PG_DATABASE=auth_session_cookies
+* SESS_SECRET=[secret key]
 
-
-# Database setup
+Command that you might want to use to generate SESS_SECRET:
+```
+node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
+```
+## Configure database
 For main database I use postgreSQL.
 
 ```
